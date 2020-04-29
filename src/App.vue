@@ -6,7 +6,15 @@
     @mousemove="waitToFocus"
     @keydown="waitToFocus"
   >
-    <input id="search" type="text" ref="search" v-model="query" :name="random" @mouseenter="focus" />
+    <input
+      id="search"
+      type="text"
+      ref="search"
+      placeholder="编号…"
+      v-model="query"
+      :name="random"
+      @mouseenter="focus"
+    />
     <div id="options">
       <!-- <label id="focus">
         <input type="checkbox" v-model="options.focus" />焦点
