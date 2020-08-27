@@ -16,33 +16,48 @@
       @mouseenter="focus"
     />
     <div id="options">
-      <!-- <label id="focus">
-        <input type="checkbox" v-model="options.focus" />焦点
-      </label>-->
+      <label>
+        <input type="checkbox" v-model="options.layers" />语义化图层
+      </label>
+      <label>
+        <input type="checkbox" v-model="options.fgColors" />语义化前景
+      </label>
     </div>
     <div id="results">
       <div v-if="exp" key="exp" class="result">
         <v-exp-item :key="`e:${exp}`" :exp="exp" />
       </div>
-      <div v-if="layer" key="layer" class="result">
-        <v-layer-item
-          expanded
-          :code="layer.code"
-          :key="`l:${layer.code}`"
-          :label="layer.label"
-          :styles="layer.styles"
-        />
-      </div>
-      <div v-if="color" key="color" class="result">
+      <template v-if="options.layers">
+        <div v-for="(layer, i) in layers" :key="`layer-${i}`" class="result">
+          <v-layer-item
+            expanded
+            :code="layer.code"
+            :key="`l:${layer.code}`"
+            :label="layer.label"
+            :styles="layer.styles"
+          />
+        </div>
+      </template>
+      <template v-if="options.fgColors">
+        <div v-for="(color, i) in fgColors" :key="`fg-color-${i}`" class="result">
+          <v-fg-color-item
+            expanded
+            :code="color.code"
+            :key="`fgc:${color.code}`"
+            :label="color.label"
+            :styles="color.styles"
+          />
+        </div>
+      </template>
+      <div v-for="(color, i) in colors" :key="`color-${i}`" class="result">
         <v-color-item
-          expanded
           :code="color.code"
           :key="`c:${color.code}`"
           :label="color.label"
-          :styles="color.styles"
+          :color="color.value"
         />
       </div>
-      <div v-if="font" key="font" class="result">
+      <div v-for="(font, i) in fonts" :key="`font-${i}`" class="result">
         <v-font-item
           :code="font.code"
           :key="`f:${font.code}`"
@@ -50,7 +65,7 @@
           :styles="font.styles"
         />
       </div>
-      <div v-if="radius" key="radius" class="result">
+      <div v-for="(radius, i) in radii" :key="`radius-${i}`" class="result">
         <v-radius-item
           :code="radius.code"
           :key="`r:${radius.code}`"
@@ -58,7 +73,7 @@
           :radius="radius.value"
         />
       </div>
-      <div v-if="lineHeight" key="lineHeight" class="result">
+      <div v-for="(lineHeight, i) in lineHeights" :key="`lineHeight-${i}`" class="result">
         <v-line-height-item
           :code="lineHeight.code"
           :key="`h:${lineHeight.code}`"
@@ -66,7 +81,7 @@
           :line-height="lineHeight.value"
         />
       </div>
-      <div v-if="shadow" key="shadow" class="result">
+      <div v-for="(shadow, i) in shadows" :key="`shadow-${i}`" class="result">
         <v-shadow-item
           :code="shadow.code"
           :key="`h:${shadow.code}`"
@@ -80,6 +95,7 @@
 
 <script>
 import VLayerItem from "./components/LayerItem";
+import VFgColorItem from "./components/FgColorItem";
 import VColorItem from "./components/ColorItem";
 import VFontItem from "./components/FontItem";
 import VRadiusItem from "./components/RadiusItem";
@@ -97,6 +113,7 @@ export default {
   name: "App",
   components: {
     VLayerItem,
+    VFgColorItem,
     VColorItem,
     VFontItem,
     VRadiusItem,
@@ -114,17 +131,12 @@ export default {
       query: "",
       random: `i${Math.floor(Math.random() * 1000)}`,
       options: {
-        focus: false
+        layers: false,
+        fgs: false
       }
     };
   },
   computed: {
-    layer() {
-      return pickLayer(this.query);
-    },
-    color() {
-      return pickColor(this.query);
-    },
     exp() {
       let [matched, count, type] = this.query.match(/^(\d+)([HP])$/i) || [];
       if (matched) {
@@ -135,29 +147,28 @@ export default {
       }
       return null;
     },
-    font() {
-      return pickFont(this.query);
+    layers() {
+      return pickLayers(this.query);
     },
-    radius() {
-      return pickRadius(this.query);
+    fgColors() {
+      return pickFgColors(this.query);
     },
-    lineHeight() {
-      return pickLineHeight(this.query);
+    colors() {
+      return pickColors(this.query);
     },
-    shadow() {
-      return pickShadow(this.query);
+    fonts() {
+      return pickFonts(this.query);
+    },
+    radii() {
+      return pickRadii(this.query);
+    },
+    lineHeights() {
+      return pickLineHeights(this.query);
+    },
+    shadows() {
+      return pickShadows(this.query);
     }
   },
-  // watch: {
-  //   exp(val) {
-  //     if (val) {
-  //       this.$nextTick(() => {
-  //         this.$el.querySelector(`[data-code="${val}"]`).click()
-  //         this.focus()
-  //       })
-  //     }
-  //   }
-  // },
   mounted() {
     this.focus();
 
@@ -184,49 +195,38 @@ export default {
   }
 };
 
-function pickLayer(code) {
-  if (!code) {
-    return null;
-  }
-
+function pickLayers(code) {
+  let layers = []
   for (let i = 0; i < semantics.layers.length; i++) {
     let group = semantics.layers[i];
+
     if (!group.children) {
       continue;
     }
     for (let j = 0; j < group.children.length; j++) {
       let layer = group.children[j];
-      if (code.toLowerCase() === layer.code.toLowerCase()) {
-        return {
+      if (match(code, group.code) || match(code, layer.code) || !code) {
+        layers.push({
           code: layer.code,
           label: layer.label,
           styles: transformStyles(mergeStyles(group.styles, layer.styles)),
           group
-        };
+        });
       }
     }
   }
 
-  return null;
+  return layers;
 }
 
-function pickColor(code) {
-  if (!code) {
-    return null;
-  }
-
-  let color = semantics.colors.find(
-    c => code.toLowerCase() === c.code.toLowerCase()
-  );
-  if (color) {
-    return {
-      code: color.code,
-      label: color.label,
-      styles: transformStyles(color.styles)
-    };
-  }
-
-  return null;
+function pickFgColors(code) {
+  return semantics.fgColors.filter(
+    c => match(code, c.code)
+  ).map(color => ({
+    code: color.code,
+    label: color.label,
+    styles: transformStyles(color.styles)
+  }))
 }
 
 function transformStyles(styles) {
@@ -271,78 +271,54 @@ function mergeStates(parent = [], child = []) {
   );
 }
 
-function pickFont(code) {
-  if (!code) {
-    return null;
-  }
-
-  let font = semantics.fonts.find(
-    f => code.toLowerCase() === f.code.toLowerCase()
-  );
-  if (font) {
-    return {
-      ...font
-    };
-  }
-
-  return null;
+function match(query, code) {
+  return code.toLowerCase().indexOf(query.toLowerCase()) !== -1
 }
 
-function pickRadius(code) {
-  if (!code) {
-    return null;
-  }
-
-  let radius = semantics.radii.find(
-    r => code.toLowerCase() === r.code.toLowerCase()
-  );
-  if (radius) {
-    return {
-      code: radius.code,
-      label: radius.label,
-      value: radius.styles.radius
-    };
-  }
-
-  return null;
+function pickColors(code) {
+  return semantics.colors.filter(
+    c => match(code, c.code)
+  ).map(color => ({
+    code: color.code,
+    label: color.label,
+    value: color.styles.color
+  }))
 }
 
-function pickLineHeight(code) {
-  if (!code) {
-    return null;
-  }
-
-  let lh = semantics.lineHeights.find(
-    h => code.toLowerCase() === h.code.toLowerCase()
+function pickFonts(code) {
+  return semantics.fonts.filter(
+    f => match(code, f.code)
   );
-  if (lh) {
-    return {
-      code: lh.code,
-      label: lh.label,
-      value: lh.styles.lineHeight
-    };
-  }
-
-  return null;
 }
 
-function pickShadow(code) {
-  if (!code) {
-    return null;
-  }
+function pickRadii(code) {
+  return semantics.radii.filter(
+    r => match(code, r.code)
+  ).map(radius => ({
+    code: radius.code,
+    label: radius.label,
+    value: radius.styles.radius
+  }));
+}
 
-  let shadow = semantics.shadows.find(
-    s => code.toLowerCase() === s.code.toLowerCase()
-  );
-  if (shadow) {
-    return {
-      code: shadow.code,
-      label: shadow.label,
-      value: shadow.styles.shadow
-    };
-  }
+function pickLineHeights(code) {
+  return semantics.lineHeights.filter(
+    h => match(code, h.code)
+  ).map(lh => ({
+    code: lh.code,
+    label: lh.label,
+    value: lh.styles.lineHeight
+  }));
+}
 
-  return null;
+function pickShadows(code) {
+  return semantics.shadows.filter(
+    s => match(code, s.code)
+  ).map(shadow => ({
+    code: shadow.code,
+    label: shadow.label,
+    value: shadow.styles.shadow
+  }));
 }
 </script>
 
@@ -436,17 +412,19 @@ button::-moz-focus-inner,
   margin: 36px;
 }
 
-#focus {
+#options label {
   display: flex;
   align-items: center;
-  font-size: 18px;
+  font-size: 14px;
   white-space: nowrap;
+  margin-right: 20px;
 }
 
-#focus input {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#options label:last-child {
+  margin-right: 0;
+}
+
+#options input {
   appearance: none;
   margin-right: 8px;
   width: 16px;
@@ -461,22 +439,25 @@ button::-moz-focus-inner,
   transition-duration: 0.2s;
 }
 
-#focus input:hover {
+#options input:hover {
   border-color: #a8b0bf;
   background-color: #f6f7fa;
 }
 
-#focus input:active {
+#options input:active {
   background-color: #e2e6f0;
 }
 
-#focus input:checked {
+#options input:checked {
   background-color: #0052cc;
   border-color: transparent !important;
 }
 
-#focus input:checked::after {
+#options input:checked::after {
   content: "✓";
+  display: block;
+  text-align: center;
+  font-size: 12px;
   font-weight: 700;
 }
 

@@ -29,7 +29,7 @@ export default {
   width: 36px;
   height: 36px;
   border: 2px solid #d3d9e6;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 4px;
 }

@@ -1,61 +1,72 @@
 <template>
   <div class="color-item">
     <v-desc :code="code" :label="label" />
-    <div class="detail">
-      <v-layer :styles="styles" />
-      <div v-if="expanded" class="pieces">
-        <v-piece-table :properties="layerProps" :styles="styles" />
-      </div>
+    <div class="value">
+      <div class="demo" :style="styles"></div>
+      <v-copy-button :value="color" />
     </div>
   </div>
 </template>
 
 <script>
 import VDesc from "./Desc";
-import VLayer from "./Layer";
-import VPieceTable from "./PieceTable";
+import VCopyButton from "./CopyButton";
+import { evaluate } from "../utils";
 
 export default {
   name: "v-color-item",
   components: {
     VDesc,
-    VLayer,
-    VPieceTable
+    VCopyButton
   },
   props: {
     code: String,
     label: String,
-    styles: Array,
-    expanded: Boolean
+    color: String
   },
-  data () {
-    return {
-      layerProps: [
-        { prop: ['color', 'border'], label: '颜色' }
-      ]
+  computed: {
+    styles() {
+      return {
+        backgroundColor: evaluate(this.color)
+      };
     }
   }
 };
 </script>
 
 <style scoped>
-.color-item,
-.pieces {
+.color-item {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 24px 0;
+}
+
+.value {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
   align-items: center;
 }
 
-.detail {
-  display: flex;
-  align-items: center;
+.demo {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  margin-right: 28px;
+  border-radius: 4px;
 }
 
-.detail x-layer {
-  margin-right: 32px;
-  flex-shrink: 0;
-}
-
-.pieces {
-  width: 400px;
+.demo::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  border: 2px dotted #d3d9e6;
+  border-radius: 6px;
 }
 </style>

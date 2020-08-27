@@ -58,7 +58,7 @@ export default {
   width: 36px;
   height: 36px;
   overflow: hidden;
-  margin-right: 24px;
+  margin-right: 32px;
 }
 
 .box {

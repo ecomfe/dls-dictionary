@@ -2,7 +2,7 @@
   <div class="line-height-item">
     <v-desc :code="code" :label="label" />
     <div class="value">
-      <div class="demo" :style="styles">百度将在 2020 年，在全线产品上线新的设计语言。</div>
+      <div class="demo" :style="styles">众里寻他千百度，蓦然回首，那人却在，灯火阑珊处。</div>
       <v-copy-button :value="lineHeight" />
     </div>
   </div>
@@ -51,11 +51,12 @@ export default {
 }
 
 .demo {
-  width: 180px;
+  width: 200px;
   border-top: 1px dotted #d3d9e6;
   border-bottom: 1px dotted #d3d9e6;
   margin-right: 24px;
   font-size: 14px;
   color: #282c33;
+  text-align: justify;
 }
 </style>

@@ -588,7 +588,7 @@
       ]
     }
   ],
-  "colors": [
+  "fgColors": [
     {
       "code": "PR",
       "label": "反转主要前景",
@@ -626,7 +626,12 @@
       "code": "NS",
       "label": "增强前景",
       "styles": {
-        "color": ["@dls-foreground-color-neutral-strong", null, null, null]
+        "color": [
+          "@dls-foreground-color-neutral-strong",
+          "@dls-foreground-color-neutral-strong-hover",
+          "@dls-foreground-color-neutral-strong-active",
+          "@dls-foreground-color-neutral-strong-disabled"
+        ]
       }
     },
     {
@@ -645,7 +650,12 @@
       "code": "NL",
       "label": "轻前景",
       "styles": {
-        "color": ["@dls-foreground-color-neutral-light", null, null, null]
+        "color": [
+          "@dls-foreground-color-neutral-light",
+          "@dls-foreground-color-neutral-light-hover",
+          "@dls-foreground-color-neutral-light-active",
+          "@dls-foreground-color-neutral-light-disabled"
+        ]
       }
     },
     {
@@ -662,9 +672,14 @@
     },
     {
       "code": "ND",
-      "label": "禁用前景",
+      "label": "黯淡前景",
       "styles": {
-        "color": ["@dls-foreground-color-neutral-disabled", null, null, null]
+        "color": [
+          "@dls-foreground-color-neutral-dim",
+          "@dls-foreground-color-neutral-dim-hover",
+          "@dls-foreground-color-neutral-dim-active",
+          "@dls-foreground-color-neutral-dim-disabled"
+        ]
       }
     },
     {
@@ -716,6 +731,13 @@
       }
     },
     {
+      "code": "H",
+      "label": "搜索高亮前景色",
+      "styles": {
+        "color": ["@dls-foreground-color-highlighted", null, null, null]
+      }
+    },
+    {
       "code": "L1",
       "label": "线条 1",
       "styles": {
@@ -730,12 +752,504 @@
         "color": ["@dls-line-color-2", null, null, null],
         "line": true
       }
+    }
+  ],
+  "colors": [
+    {
+      "code": "G0",
+      "label": "中性色 0",
+      "styles": {
+        "color": "@dls-color-gray-0"
+      }
     },
     {
-      "code": "H",
-      "label": "搜索高亮前景色",
+      "code": "G1",
+      "label": "中性色 1",
       "styles": {
-        "color": ["@dls-foreground-color-highlighted", null, null, null]
+        "color": "@dls-color-gray-1"
+      }
+    },
+    {
+      "code": "G2",
+      "label": "中性色 2",
+      "styles": {
+        "color": "@dls-color-gray-2"
+      }
+    },
+    {
+      "code": "G3",
+      "label": "中性色 3",
+      "styles": {
+        "color": "@dls-color-gray-3"
+      }
+    },
+    {
+      "code": "G4",
+      "label": "中性色 4",
+      "styles": {
+        "color": "@dls-color-gray-4"
+      }
+    },
+    {
+      "code": "G5",
+      "label": "中性色 5",
+      "styles": {
+        "color": "@dls-color-gray-5"
+      }
+    },
+    {
+      "code": "G6",
+      "label": "中性色 6",
+      "styles": {
+        "color": "@dls-color-gray-6"
+      }
+    },
+    {
+      "code": "G7",
+      "label": "中性色 7",
+      "styles": {
+        "color": "@dls-color-gray-7"
+      }
+    },
+    {
+      "code": "G8",
+      "label": "中性色 8",
+      "styles": {
+        "color": "@dls-color-gray-8"
+      }
+    },
+    {
+      "code": "G9",
+      "label": "中性色 9",
+      "styles": {
+        "color": "@dls-color-gray-9"
+      }
+    },
+    {
+      "code": "G10",
+      "label": "中性色 10",
+      "styles": {
+        "color": "@dls-color-gray-10"
+      }
+    },
+    {
+      "code": "G11",
+      "label": "中性色 11",
+      "styles": {
+        "color": "@dls-color-gray-11"
+      }
+    },
+    {
+      "code": "B0",
+      "label": "品牌色 0",
+      "styles": {
+        "color": "@dls-color-brand-0"
+      }
+    },
+    {
+      "code": "B1",
+      "label": "品牌色 1",
+      "styles": {
+        "color": "@dls-color-brand-1"
+      }
+    },
+    {
+      "code": "B2",
+      "label": "品牌色 2",
+      "styles": {
+        "color": "@dls-color-brand-2"
+      }
+    },
+    {
+      "code": "B3",
+      "label": "品牌色 3",
+      "styles": {
+        "color": "@dls-color-brand-3"
+      }
+    },
+    {
+      "code": "B4",
+      "label": "品牌色 4",
+      "styles": {
+        "color": "@dls-color-brand-4"
+      }
+    },
+    {
+      "code": "B5",
+      "label": "品牌色 5",
+      "styles": {
+        "color": "@dls-color-brand-5"
+      }
+    },
+    {
+      "code": "B6",
+      "label": "品牌色 6",
+      "styles": {
+        "color": "@dls-color-brand-6"
+      }
+    },
+    {
+      "code": "B7",
+      "label": "品牌色 7",
+      "styles": {
+        "color": "@dls-color-brand-7"
+      }
+    },
+    {
+      "code": "B8",
+      "label": "品牌色 8",
+      "styles": {
+        "color": "@dls-color-brand-8"
+      }
+    },
+    {
+      "code": "B9",
+      "label": "品牌色 9",
+      "styles": {
+        "color": "@dls-color-brand-9"
+      }
+    },
+    {
+      "code": "B10",
+      "label": "品牌色 10",
+      "styles": {
+        "color": "@dls-color-brand-10"
+      }
+    },
+    {
+      "code": "B11",
+      "label": "品牌色 11",
+      "styles": {
+        "color": "@dls-color-brand-11"
+      }
+    },
+    {
+      "code": "I0",
+      "label": "信息色 0",
+      "styles": {
+        "color": "@dls-color-info-0"
+      }
+    },
+    {
+      "code": "I1",
+      "label": "信息色 1",
+      "styles": {
+        "color": "@dls-color-info-1"
+      }
+    },
+    {
+      "code": "I2",
+      "label": "信息色 2",
+      "styles": {
+        "color": "@dls-color-info-2"
+      }
+    },
+    {
+      "code": "I3",
+      "label": "信息色 3",
+      "styles": {
+        "color": "@dls-color-info-3"
+      }
+    },
+    {
+      "code": "I4",
+      "label": "信息色 4",
+      "styles": {
+        "color": "@dls-color-info-4"
+      }
+    },
+    {
+      "code": "I5",
+      "label": "信息色 5",
+      "styles": {
+        "color": "@dls-color-info-5"
+      }
+    },
+    {
+      "code": "I6",
+      "label": "信息色 6",
+      "styles": {
+        "color": "@dls-color-info-6"
+      }
+    },
+    {
+      "code": "I7",
+      "label": "信息色 7",
+      "styles": {
+        "color": "@dls-color-info-7"
+      }
+    },
+    {
+      "code": "I8",
+      "label": "信息色 8",
+      "styles": {
+        "color": "@dls-color-info-8"
+      }
+    },
+    {
+      "code": "I9",
+      "label": "信息色 9",
+      "styles": {
+        "color": "@dls-color-info-9"
+      }
+    },
+    {
+      "code": "I10",
+      "label": "信息色 10",
+      "styles": {
+        "color": "@dls-color-info-10"
+      }
+    },
+    {
+      "code": "I11",
+      "label": "信息色 11",
+      "styles": {
+        "color": "@dls-color-info-11"
+      }
+    },
+    {
+      "code": "S0",
+      "label": "成功色 0",
+      "styles": {
+        "color": "@dls-color-success-0"
+      }
+    },
+    {
+      "code": "S1",
+      "label": "成功色 1",
+      "styles": {
+        "color": "@dls-color-success-1"
+      }
+    },
+    {
+      "code": "S2",
+      "label": "成功色 2",
+      "styles": {
+        "color": "@dls-color-success-2"
+      }
+    },
+    {
+      "code": "S3",
+      "label": "成功色 3",
+      "styles": {
+        "color": "@dls-color-success-3"
+      }
+    },
+    {
+      "code": "S4",
+      "label": "成功色 4",
+      "styles": {
+        "color": "@dls-color-success-4"
+      }
+    },
+    {
+      "code": "S5",
+      "label": "成功色 5",
+      "styles": {
+        "color": "@dls-color-success-5"
+      }
+    },
+    {
+      "code": "S6",
+      "label": "成功色 6",
+      "styles": {
+        "color": "@dls-color-success-6"
+      }
+    },
+    {
+      "code": "S7",
+      "label": "成功色 7",
+      "styles": {
+        "color": "@dls-color-success-7"
+      }
+    },
+    {
+      "code": "S8",
+      "label": "成功色 8",
+      "styles": {
+        "color": "@dls-color-success-8"
+      }
+    },
+    {
+      "code": "S9",
+      "label": "成功色 9",
+      "styles": {
+        "color": "@dls-color-success-9"
+      }
+    },
+    {
+      "code": "S10",
+      "label": "成功色 10",
+      "styles": {
+        "color": "@dls-color-success-10"
+      }
+    },
+    {
+      "code": "S11",
+      "label": "成功色 11",
+      "styles": {
+        "color": "@dls-color-success-11"
+      }
+    },
+    {
+      "code": "W0",
+      "label": "警告色 0",
+      "styles": {
+        "color": "@dls-color-warning-0"
+      }
+    },
+    {
+      "code": "W1",
+      "label": "警告色 1",
+      "styles": {
+        "color": "@dls-color-warning-1"
+      }
+    },
+    {
+      "code": "W2",
+      "label": "警告色 2",
+      "styles": {
+        "color": "@dls-color-warning-2"
+      }
+    },
+    {
+      "code": "W3",
+      "label": "警告色 3",
+      "styles": {
+        "color": "@dls-color-warning-3"
+      }
+    },
+    {
+      "code": "W4",
+      "label": "警告色 4",
+      "styles": {
+        "color": "@dls-color-warning-4"
+      }
+    },
+    {
+      "code": "W5",
+      "label": "警告色 5",
+      "styles": {
+        "color": "@dls-color-warning-5"
+      }
+    },
+    {
+      "code": "W6",
+      "label": "警告色 6",
+      "styles": {
+        "color": "@dls-color-warning-6"
+      }
+    },
+    {
+      "code": "W7",
+      "label": "警告色 7",
+      "styles": {
+        "color": "@dls-color-warning-7"
+      }
+    },
+    {
+      "code": "W8",
+      "label": "警告色 8",
+      "styles": {
+        "color": "@dls-color-warning-8"
+      }
+    },
+    {
+      "code": "W9",
+      "label": "警告色 9",
+      "styles": {
+        "color": "@dls-color-warning-9"
+      }
+    },
+    {
+      "code": "W10",
+      "label": "警告色 10",
+      "styles": {
+        "color": "@dls-color-warning-10"
+      }
+    },
+    {
+      "code": "W11",
+      "label": "警告色 11",
+      "styles": {
+        "color": "@dls-color-warning-11"
+      }
+    },
+    {
+      "code": "E1",
+      "label": "错误色 1",
+      "styles": {
+        "color": "@dls-color-error-1"
+      }
+    },
+    {
+      "code": "E2",
+      "label": "错误色 2",
+      "styles": {
+        "color": "@dls-color-error-2"
+      }
+    },
+    {
+      "code": "E3",
+      "label": "错误色 3",
+      "styles": {
+        "color": "@dls-color-error-3"
+      }
+    },
+    {
+      "code": "E4",
+      "label": "错误色 4",
+      "styles": {
+        "color": "@dls-color-error-4"
+      }
+    },
+    {
+      "code": "E5",
+      "label": "错误色 5",
+      "styles": {
+        "color": "@dls-color-error-5"
+      }
+    },
+    {
+      "code": "E6",
+      "label": "错误色 6",
+      "styles": {
+        "color": "@dls-color-error-6"
+      }
+    },
+    {
+      "code": "E7",
+      "label": "错误色 7",
+      "styles": {
+        "color": "@dls-color-error-7"
+      }
+    },
+    {
+      "code": "E8",
+      "label": "错误色 8",
+      "styles": {
+        "color": "@dls-color-error-8"
+      }
+    },
+    {
+      "code": "E9",
+      "label": "错误色 9",
+      "styles": {
+        "color": "@dls-color-error-9"
+      }
+    },
+    {
+      "code": "E10",
+      "label": "错误色 10",
+      "styles": {
+        "color": "@dls-color-error-10"
+      }
+    },
+    {
+      "code": "E11",
+      "label": "错误色 11",
+      "styles": {
+        "color": "@dls-color-error-11"
       }
     }
   ],
