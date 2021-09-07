@@ -17,7 +17,7 @@
     />
     <div id="options">
       <label><input type="checkbox" v-model="options.colors" />颜色</label>
-      <label><input type="checkbox" v-model="options.fonts" />字号</label>
+      <label><input type="checkbox" v-model="options.fonts" />字体</label>
       <label><input type="checkbox" v-model="options.lines" />线条色</label>
       <label><input type="checkbox" v-model="options.radii" />圆角</label>
       <label><input type="checkbox" v-model="options.lineHeights" />行高</label>
