@@ -16,6 +16,12 @@
       @mouseenter="focus"
     />
     <div id="options">
+      <label><input type="checkbox" v-model="options.colors" />颜色</label>
+      <label><input type="checkbox" v-model="options.fonts" />字号</label>
+      <label><input type="checkbox" v-model="options.lines" />线条色</label>
+      <label><input type="checkbox" v-model="options.radii" />圆角</label>
+      <label><input type="checkbox" v-model="options.lineHeights" />行高</label>
+      <label><input type="checkbox" v-model="options.shadows" />阴影</label>
       <label>
         <input type="checkbox" v-model="options.layers" />语义化图层
       </label>
@@ -39,7 +45,11 @@
         </div>
       </template>
       <template v-if="options.fgColors">
-        <div v-for="(color, i) in fgColors" :key="`fg-color-${i}`" class="result">
+        <div
+          v-for="(color, i) in fgColors"
+          :key="`fg-color-${i}`"
+          class="result"
+        >
           <v-fg-color-item
             expanded
             :code="color.code"
@@ -49,46 +59,70 @@
           />
         </div>
       </template>
-      <div v-for="(color, i) in colors" :key="`color-${i}`" class="result">
-        <v-color-item
-          :code="color.code"
-          :key="`c:${color.code}`"
-          :label="color.label"
-          :color="color.value"
-        />
-      </div>
-      <div v-for="(font, i) in fonts" :key="`font-${i}`" class="result">
-        <v-font-item
-          :code="font.code"
-          :key="`f:${font.code}`"
-          :label="font.label"
-          :styles="font.styles"
-        />
-      </div>
-      <div v-for="(radius, i) in radii" :key="`radius-${i}`" class="result">
-        <v-radius-item
-          :code="radius.code"
-          :key="`r:${radius.code}`"
-          :label="radius.label"
-          :radius="radius.value"
-        />
-      </div>
-      <div v-for="(lineHeight, i) in lineHeights" :key="`lineHeight-${i}`" class="result">
-        <v-line-height-item
-          :code="lineHeight.code"
-          :key="`h:${lineHeight.code}`"
-          :label="lineHeight.label"
-          :line-height="lineHeight.value"
-        />
-      </div>
-      <div v-for="(shadow, i) in shadows" :key="`shadow-${i}`" class="result">
-        <v-shadow-item
-          :code="shadow.code"
-          :key="`h:${shadow.code}`"
-          :label="shadow.label"
-          :shadow="shadow.value"
-        />
-      </div>
+      <template v-if="options.colors">
+        <div v-for="(color, i) in colors" :key="`color-${i}`" class="result">
+          <v-color-item
+            :code="color.code"
+            :key="`c:${color.code}`"
+            :label="color.label"
+            :color="color.value"
+          />
+        </div>
+      </template>
+      <template v-if="options.fonts">
+        <div v-for="(font, i) in fonts" :key="`font-${i}`" class="result">
+          <v-font-item
+            :code="font.code"
+            :key="`f:${font.code}`"
+            :label="font.label"
+            :styles="font.styles"
+          />
+        </div>
+      </template>
+      <template v-if="options.lines">
+        <div v-for="(line, i) in lines" :key="`line-${i}`" class="result">
+          <v-line-item
+            :code="line.code"
+            :key="`l:${line.code}`"
+            :label="line.label"
+            :color="line.value"
+          />
+        </div>
+      </template>
+      <template v-if="options.radii">
+        <div v-for="(radius, i) in radii" :key="`radius-${i}`" class="result">
+          <v-radius-item
+            :code="radius.code"
+            :key="`r:${radius.code}`"
+            :label="radius.label"
+            :radius="radius.value"
+          />
+        </div>
+      </template>
+      <template v-if="options.lineHeights">
+        <div
+          v-for="(lineHeight, i) in lineHeights"
+          :key="`lineHeight-${i}`"
+          class="result"
+        >
+          <v-line-height-item
+            :code="lineHeight.code"
+            :key="`lh:${lineHeight.code}`"
+            :label="lineHeight.label"
+            :line-height="lineHeight.value"
+          />
+        </div>
+      </template>
+      <template v-if="options.shadows">
+        <div v-for="(shadow, i) in shadows" :key="`shadow-${i}`" class="result">
+          <v-shadow-item
+            :code="shadow.code"
+            :key="`h:${shadow.code}`"
+            :label="shadow.label"
+            :shadow="shadow.value"
+          />
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -98,6 +132,7 @@ import VLayerItem from "./components/LayerItem";
 import VFgColorItem from "./components/FgColorItem";
 import VColorItem from "./components/ColorItem";
 import VFontItem from "./components/FontItem";
+import VLineItem from "./components/LineItem";
 import VRadiusItem from "./components/RadiusItem";
 import VLineHeightItem from "./components/LineHeightItem";
 import VShadowItem from "./components/ShadowItem";
@@ -116,6 +151,7 @@ export default {
     VFgColorItem,
     VColorItem,
     VFontItem,
+    VLineItem,
     VRadiusItem,
     VLineHeightItem,
     VShadowItem,
@@ -132,7 +168,13 @@ export default {
       random: `i${Math.floor(Math.random() * 1000)}`,
       options: {
         layers: false,
-        fgs: false
+        fgColors: false,
+        colors: true,
+        fonts: true,
+        lines: true,
+        radii: true,
+        lineHeights: true,
+        shadows: true
       }
     };
   },
@@ -158,6 +200,9 @@ export default {
     },
     fonts() {
       return pickFonts(this.query);
+    },
+    lines() {
+      return pickLines(this.query);
     },
     radii() {
       return pickRadii(this.query);
@@ -196,7 +241,7 @@ export default {
 };
 
 function pickLayers(code) {
-  let layers = []
+  let layers = [];
   for (let i = 0; i < semantics.layers.length; i++) {
     let group = semantics.layers[i];
 
@@ -220,13 +265,13 @@ function pickLayers(code) {
 }
 
 function pickFgColors(code) {
-  return semantics.fgColors.filter(
-    c => match(code, c.code)
-  ).map(color => ({
-    code: color.code,
-    label: color.label,
-    styles: transformStyles(color.styles)
-  }))
+  return semantics.fgColors
+    .filter(c => match(code, c.code))
+    .map(color => ({
+      code: color.code,
+      label: color.label,
+      styles: transformStyles(color.styles)
+    }));
 }
 
 function transformStyles(styles) {
@@ -272,53 +317,61 @@ function mergeStates(parent = [], child = []) {
 }
 
 function match(query, code) {
-  return code.toLowerCase().indexOf(query.toLowerCase()) !== -1
+  return code.toLowerCase().indexOf(query.toLowerCase()) !== -1;
 }
 
 function pickColors(code) {
-  return semantics.colors.filter(
-    c => match(code, c.code)
-  ).map(color => ({
-    code: color.code,
-    label: color.label,
-    value: color.styles.color
-  }))
+  return semantics.colors
+    .filter(c => match(code, c.code))
+    .map(color => ({
+      code: color.code,
+      label: color.label,
+      value: color.styles.color
+    }));
 }
 
 function pickFonts(code) {
-  return semantics.fonts.filter(
-    f => match(code, f.code)
-  );
+  return semantics.fonts.filter(f => match(code, f.code));
+}
+
+function pickLines(code) {
+  return semantics.lines
+    .filter(l => match(code, l.code))
+    .map(line => ({
+      code: line.code,
+      label: line.label,
+      value: line.styles.color
+    }));
 }
 
 function pickRadii(code) {
-  return semantics.radii.filter(
-    r => match(code, r.code)
-  ).map(radius => ({
-    code: radius.code,
-    label: radius.label,
-    value: radius.styles.radius
-  }));
+  return semantics.radii
+    .filter(r => match(code, r.code))
+    .map(radius => ({
+      code: radius.code,
+      label: radius.label,
+      value: radius.styles.radius
+    }));
 }
 
 function pickLineHeights(code) {
-  return semantics.lineHeights.filter(
-    h => match(code, h.code)
-  ).map(lh => ({
-    code: lh.code,
-    label: lh.label,
-    value: lh.styles.lineHeight
-  }));
+  return semantics.lineHeights
+    .filter(h => match(code, h.code))
+    .map(lh => ({
+      code: lh.code,
+      label: lh.label,
+      value: lh.styles.lineHeight
+    }));
 }
 
 function pickShadows(code) {
-  return semantics.shadows.filter(
-    s => match(code, s.code)
-  ).map(shadow => ({
-    code: shadow.code,
-    label: shadow.label,
-    value: shadow.styles.shadow
-  }));
+  return semantics.shadows
+    .filter(s => match(code, s.code))
+    .map(shadow => ({
+      code: shadow.code,
+      label: shadow.label,
+      value: shadow.styles.shadow
+    }));
 }
 </script>
 

@@ -683,6 +683,18 @@
       }
     },
     {
+      "code": "NH",
+      "label": "可高亮前景",
+      "styles": {
+        "color": [
+          "@dls-foreground-color-neutral-highlightable",
+          "@dls-foreground-color-neutral-highlightable-hover",
+          "@dls-foreground-color-neutral-highlightable-active",
+          "@dls-foreground-color-neutral-highlightable-disabled"
+        ]
+      }
+    },
+    {
       "code": "IP",
       "label": "主要信息前景",
       "styles": {
@@ -736,21 +748,21 @@
       "styles": {
         "color": ["@dls-foreground-color-highlighted", null, null, null]
       }
-    },
+    }
+  ],
+  "lines": [
     {
       "code": "L1",
       "label": "线条 1",
       "styles": {
-        "color": ["@dls-line-color-1", null, null, null],
-        "line": true
+        "color": "@dls-line-color-1"
       }
     },
     {
       "code": "L2",
       "label": "线条 2",
       "styles": {
-        "color": ["@dls-line-color-2", null, null, null],
-        "line": true
+        "color": "@dls-line-color-2"
       }
     }
   ],
@@ -1376,7 +1388,7 @@
       "code": "S1",
       "label": "阴影 1",
       "styles": {
-        "shadow": "@dls-shadow-1"
+        "shadow": "@dls-shadow-light-1"
       }
     },
     {
@@ -1391,6 +1403,27 @@
       "label": "阴影 3",
       "styles": {
         "shadow": "@dls-shadow-3"
+      }
+    },
+    {
+      "code": "L1",
+      "label": "轻阴影 1",
+      "styles": {
+        "shadow": "@dls-shadow-light-1"
+      }
+    },
+    {
+      "code": "L2",
+      "label": "轻阴影 2",
+      "styles": {
+        "shadow": "@dls-shadow-light-2"
+      }
+    },
+    {
+      "code": "L3",
+      "label": "轻阴影 3",
+      "styles": {
+        "shadow": "@dls-shadow-light-3"
       }
     }
   ]
