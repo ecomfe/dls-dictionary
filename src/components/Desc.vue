@@ -7,12 +7,12 @@
 
 <script>
 export default {
-  name: "v-desc",
+  name: 'v-desc',
   props: {
     code: String,
-    label: String
-  }
-};
+    label: String,
+  },
+}
 </script>
 
 <style scoped>

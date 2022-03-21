@@ -9,34 +9,34 @@
 </template>
 
 <script>
-import VDesc from "./Desc";
-import VPiece from "./Piece";
-import VCopyButton from "./CopyButton";
+import VDesc from './Desc'
+import VPiece from './Piece'
+import VCopyButton from './CopyButton'
 
 export default {
-  name: "v-font-item",
+  name: 'v-font-item',
   components: {
     VDesc,
     VPiece,
-    VCopyButton
+    VCopyButton,
   },
   props: {
     code: String,
     label: String,
-    styles: Object
+    styles: Object,
   },
   computed: {
     fontStyles() {
       return {
         ...this.styles,
-        color: "@dls-foreground-color-neutral"
-      };
+        color: '@dls-foreground-color-neutral',
+      }
     },
     value() {
-      return this.styles.fontSize ?? this.styles.fontWeight;
-    }
-  }
-};
+      return this.styles.fontSize ?? this.styles.fontWeight
+    },
+  },
+}
 </script>
 
 <style scoped>

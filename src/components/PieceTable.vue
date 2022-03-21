@@ -12,13 +12,23 @@
     <tbody>
       <tr>
         <td></td>
-        <td v-for="(style, i) in styles" :key="i" @mouseenter="enterCol(i)" @mouseleave="leaveCol">
+        <td
+          v-for="(style, i) in styles"
+          :key="i"
+          @mouseenter="enterCol(i)"
+          @mouseleave="leaveCol"
+        >
           <v-piece v-bind="filledStyles[i]" />
         </td>
       </tr>
       <tr v-for="(p, i) in properties" :key="i">
         <th>{{ p.label }}</th>
-        <td v-for="(style, i) in styles" :key="i" @mouseenter="enterCol(i)" @mouseleave="leaveCol">
+        <td
+          v-for="(style, i) in styles"
+          :key="i"
+          @mouseenter="enterCol(i)"
+          @mouseleave="leaveCol"
+        >
           <v-copy-button :value="getStyleProp(style, p.prop)" />
         </td>
       </tr>
@@ -27,32 +37,32 @@
 </template>
 
 <script>
-import VPiece from "./Piece";
-import VCopyButton from "./CopyButton";
+import VPiece from './Piece'
+import VCopyButton from './CopyButton'
 
 export default {
-  name: "v-piece-table",
-  inject: ["options"],
+  name: 'v-piece-table',
+  inject: ['options'],
   components: {
     VPiece,
-    VCopyButton
+    VCopyButton,
   },
   props: {
     styles: Array,
-    properties: Array
+    properties: Array,
   },
   data() {
     return {
-      col: null
-    };
+      col: null,
+    }
   },
   computed: {
     filledStyles() {
       return this.styles.map((style, i) => {
         let merged = Object.keys(style).reduce((acc, prop) => {
-          acc[prop] = style[prop] ?? this.styles[0][prop];
-          return acc;
-        }, {});
+          acc[prop] = style[prop] ?? this.styles[0][prop]
+          return acc
+        }, {})
         return {
           ...merged,
           ...(this.options.focus && this.styles[0].focusRing
@@ -60,27 +70,27 @@ export default {
                 border:
                   i === 3
                     ? null
-                    : this.styles[0].focusRing === "error"
-                    ? "@dls-border-color-error-focus"
-                    : "@dls-border-color-focus",
+                    : this.styles[0].focusRing === 'error'
+                    ? '@dls-border-color-error-focus'
+                    : '@dls-border-color-focus',
                 shadow:
                   i === 3
                     ? null
-                    : this.styles[0].focusRing === "error"
-                    ? "@dls-shadow-error-focus"
-                    : "@dls-shadow-focus"
+                    : this.styles[0].focusRing === 'error'
+                    ? '@dls-shadow-error-focus'
+                    : '@dls-shadow-focus',
               }
-            : {})
-        };
-      });
-    }
+            : {}),
+        }
+      })
+    },
   },
   methods: {
     enterCol(i) {
-      this.col = i;
+      this.col = i
     },
     leaveCol() {
-      this.col = null;
+      this.col = null
     },
     getStyleProp(style, p) {
       if (Array.isArray(p)) {
@@ -94,9 +104,9 @@ export default {
       }
 
       return style[p]
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style scoped>

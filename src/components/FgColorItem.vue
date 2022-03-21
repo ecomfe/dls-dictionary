@@ -11,31 +11,29 @@
 </template>
 
 <script>
-import VDesc from "./Desc";
-import VLayer from "./Layer";
-import VPieceTable from "./PieceTable";
+import VDesc from './Desc'
+import VLayer from './Layer'
+import VPieceTable from './PieceTable'
 
 export default {
-  name: "v-fg-color-item",
+  name: 'v-fg-color-item',
   components: {
     VDesc,
     VLayer,
-    VPieceTable
+    VPieceTable,
   },
   props: {
     code: String,
     label: String,
     styles: Array,
-    expanded: Boolean
+    expanded: Boolean,
   },
-  data () {
+  data() {
     return {
-      layerProps: [
-        { prop: ['color', 'border'], label: '颜色' }
-      ]
+      layerProps: [{ prop: ['color', 'border'], label: '颜色' }],
     }
-  }
-};
+  },
+}
 </script>
 
 <style scoped>

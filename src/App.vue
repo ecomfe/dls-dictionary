@@ -16,12 +16,14 @@
       @mouseenter="focus"
     />
     <div id="options">
-      <label><input type="checkbox" v-model="options.colors" />颜色</label>
-      <label><input type="checkbox" v-model="options.fonts" />字体</label>
-      <label><input type="checkbox" v-model="options.lines" />线条色</label>
-      <label><input type="checkbox" v-model="options.radii" />圆角</label>
-      <label><input type="checkbox" v-model="options.lineHeights" />行高</label>
-      <label><input type="checkbox" v-model="options.shadows" />阴影</label>
+      <label> <input type="checkbox" v-model="options.colors" />颜色 </label>
+      <label> <input type="checkbox" v-model="options.fonts" />字体 </label>
+      <label> <input type="checkbox" v-model="options.lines" />线条色 </label>
+      <label> <input type="checkbox" v-model="options.radii" />圆角 </label>
+      <label>
+        <input type="checkbox" v-model="options.lineHeights" />行高
+      </label>
+      <label> <input type="checkbox" v-model="options.shadows" />阴影 </label>
       <label>
         <input type="checkbox" v-model="options.layers" />语义化图层
       </label>
@@ -128,24 +130,28 @@
 </template>
 
 <script>
-import VLayerItem from "./components/LayerItem";
-import VFgColorItem from "./components/FgColorItem";
-import VColorItem from "./components/ColorItem";
-import VFontItem from "./components/FontItem";
-import VLineItem from "./components/LineItem";
-import VRadiusItem from "./components/RadiusItem";
-import VLineHeightItem from "./components/LineHeightItem";
-import VShadowItem from "./components/ShadowItem";
-import VExpItem from "./components/ExpItem";
-import semantics from "./data/semantics.json";
+import VLayerItem from './components/LayerItem'
+import VFgColorItem from './components/FgColorItem'
+import VColorItem from './components/ColorItem'
+import VFontItem from './components/FontItem'
+import VLineItem from './components/LineItem'
+import VRadiusItem from './components/RadiusItem'
+import VLineHeightItem from './components/LineHeightItem'
+import VShadowItem from './components/ShadowItem'
+import VExpItem from './components/ExpItem'
+import semantics from './data/semantics.json'
 
 const EXP_MAP = {
-  H: "@dls-height-unit",
-  P: "@dls-padding-unit"
-};
+  H: '@dls-height-unit',
+  P: '@dls-padding-unit',
+}
+
+const title = document.title
+const pathName = location.pathname
+const searchParams = new URLSearchParams(location.search)
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     VLayerItem,
     VFgColorItem,
@@ -155,137 +161,149 @@ export default {
     VRadiusItem,
     VLineHeightItem,
     VShadowItem,
-    VExpItem
+    VExpItem,
   },
   provide() {
     return {
-      options: this.options
-    };
+      options: this.options,
+    }
   },
   data() {
     return {
-      query: "",
+      query: searchParams.get('q') || '',
       random: `i${Math.floor(Math.random() * 1000)}`,
       options: {
-        layers: false,
-        fgColors: false,
+        layers: true,
+        fgColors: true,
         colors: true,
         fonts: true,
         lines: true,
         radii: true,
         lineHeights: true,
-        shadows: true
-      }
-    };
+        shadows: true,
+      },
+    }
   },
   computed: {
     exp() {
-      let [matched, count, type] = this.query.match(/^(\d+)([HP])$/i) || [];
+      let [matched, count, type] = this.query.match(/^(\d+)([HP])$/i) || []
       if (matched) {
         return {
           unit: EXP_MAP[type.toUpperCase()],
-          count: Number(count)
-        };
+          count: Number(count),
+        }
       }
-      return null;
+      return null
     },
     layers() {
-      return pickLayers(this.query);
+      return pickLayers(this.query)
     },
     fgColors() {
-      return pickFgColors(this.query);
+      return pickFgColors(this.query)
     },
     colors() {
-      return pickColors(this.query);
+      return pickColors(this.query)
     },
     fonts() {
-      return pickFonts(this.query);
+      return pickFonts(this.query)
     },
     lines() {
-      return pickLines(this.query);
+      return pickLines(this.query)
     },
     radii() {
-      return pickRadii(this.query);
+      return pickRadii(this.query)
     },
     lineHeights() {
-      return pickLineHeights(this.query);
+      return pickLineHeights(this.query)
     },
     shadows() {
-      return pickShadows(this.query);
-    }
+      return pickShadows(this.query)
+    },
+  },
+  watch: {
+    query(val) {
+      val = val.toUpperCase()
+      searchParams.set('q', val)
+      const newTitle = val ? `${val} - ${title}` : title
+      const newPathName = val
+        ? `${pathName}?${searchParams.toString()}`
+        : pathName
+      history.replaceState(null, null, newPathName)
+      document.title = newTitle
+    },
   },
   mounted() {
-    this.focus();
+    this.focus()
 
-    window.addEventListener("focus", () => {
-      this.focus();
-    });
+    window.addEventListener('focus', () => {
+      this.focus()
+    })
 
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") {
-        this.focus();
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        this.focus()
       }
-    });
+    })
   },
   methods: {
     focus() {
-      this.$refs.search.select();
+      this.$refs.search.select()
     },
     waitToFocus() {
-      clearTimeout(this.timer);
+      clearTimeout(this.timer)
       this.timer = setTimeout(() => {
-        this.focus();
-      }, 3000);
-    }
-  }
-};
+        this.focus()
+      }, 3000)
+    },
+  },
+}
 
 function pickLayers(code) {
-  let layers = [];
+  let layers = []
   for (let i = 0; i < semantics.layers.length; i++) {
-    let group = semantics.layers[i];
+    let group = semantics.layers[i]
 
     if (!group.children) {
-      continue;
+      continue
     }
     for (let j = 0; j < group.children.length; j++) {
-      let layer = group.children[j];
+      let layer = group.children[j]
       if (match(code, group.code) || match(code, layer.code) || !code) {
         layers.push({
           code: layer.code,
           label: layer.label,
           styles: transformStyles(mergeStyles(group.styles, layer.styles)),
-          group
-        });
+          group,
+        })
       }
     }
   }
 
-  return layers;
+  return layers
 }
 
 function pickFgColors(code) {
   return semantics.fgColors
-    .filter(c => match(code, c.code))
-    .map(color => ({
+    .filter((c) => match(code, c.code))
+    .map((color) => ({
       code: color.code,
       label: color.label,
-      styles: transformStyles(color.styles)
-    }));
+      styles: transformStyles(color.styles),
+    }))
 }
 
 function transformStyles(styles) {
   return Array.from({ length: 4 }).map((_, i) => {
-    let foregroundProp = styles.line ? "border" : "color";
+    let foregroundProp = styles.line ? 'border' : 'color'
     let item = {
       background: styles.background ? styles.background[i] : null,
       border: styles.border ? styles.border[i] : null,
       [foregroundProp]: styles.color ? styles.color[i] : null,
-      borderWidth: styles.line ? "4px" : null,
-      focusRing: styles.focusRing
-    };
-    return item;
-  });
+      borderWidth: styles.line ? '4px' : null,
+      focusRing: styles.focusRing,
+    }
+    return item
+  })
 }
 
 function mergeStyles(parent, child) {
@@ -293,85 +311,85 @@ function mergeStyles(parent, child) {
     (acc, prop) => {
       if (prop in child) {
         if (Array.isArray(child[prop])) {
-          acc[prop] = mergeStates(acc[prop], child[prop]);
+          acc[prop] = mergeStates(acc[prop], child[prop])
         } else {
-          acc[prop] = child[prop];
+          acc[prop] = child[prop]
         }
       }
-      return acc;
+      return acc
     },
     { ...parent }
-  );
+  )
 }
 
 function mergeStates(parent = [], child = []) {
   return child.reduce(
     (acc, cur, i) => {
       if (cur !== false) {
-        acc[i] = cur;
+        acc[i] = cur
       }
-      return acc;
+      return acc
     },
     [...parent]
-  );
+  )
 }
 
 function match(query, code) {
-  return code.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  return code.toLowerCase().indexOf(query.toLowerCase()) !== -1
 }
 
 function pickColors(code) {
   return semantics.colors
-    .filter(c => match(code, c.code))
-    .map(color => ({
+    .filter((c) => match(code, c.code))
+    .map((color) => ({
       code: color.code,
       label: color.label,
-      value: color.styles.color
-    }));
+      value: color.styles.color,
+    }))
 }
 
 function pickFonts(code) {
-  return semantics.fonts.filter(f => match(code, f.code));
+  return semantics.fonts.filter((f) => match(code, f.code))
 }
 
 function pickLines(code) {
   return semantics.lines
-    .filter(l => match(code, l.code))
-    .map(line => ({
+    .filter((l) => match(code, l.code))
+    .map((line) => ({
       code: line.code,
       label: line.label,
-      value: line.styles.color
-    }));
+      value: line.styles.color,
+    }))
 }
 
 function pickRadii(code) {
   return semantics.radii
-    .filter(r => match(code, r.code))
-    .map(radius => ({
+    .filter((r) => match(code, r.code))
+    .map((radius) => ({
       code: radius.code,
       label: radius.label,
-      value: radius.styles.radius
-    }));
+      value: radius.styles.radius,
+    }))
 }
 
 function pickLineHeights(code) {
   return semantics.lineHeights
-    .filter(h => match(code, h.code))
-    .map(lh => ({
+    .filter((h) => match(code, h.code))
+    .map((lh) => ({
       code: lh.code,
       label: lh.label,
-      value: lh.styles.lineHeight
-    }));
+      value: lh.styles.lineHeight,
+    }))
 }
 
 function pickShadows(code) {
   return semantics.shadows
-    .filter(s => match(code, s.code))
-    .map(shadow => ({
+    .filter((s) => match(code, s.code))
+    .map((shadow) => ({
       code: shadow.code,
       label: shadow.label,
-      value: shadow.styles.shadow
-    }));
+      value: shadow.styles.shadow,
+    }))
 }
 </script>
 
@@ -414,16 +432,16 @@ textarea {
 }
 
 button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
+[type='button'],
+[type='reset'],
+[type='submit'] {
   -webkit-appearance: button;
 }
 
 button::-moz-focus-inner,
-[type="button"]::-moz-focus-inner,
-[type="reset"]::-moz-focus-inner,
-[type="submit"]::-moz-focus-inner {
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
@@ -507,7 +525,7 @@ button::-moz-focus-inner,
 }
 
 #options input:checked::after {
-  content: "✓";
+  content: '✓';
   display: block;
   text-align: center;
   font-size: 12px;
@@ -545,7 +563,7 @@ x-layer {
 }
 
 x-layer::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;

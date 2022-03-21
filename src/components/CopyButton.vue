@@ -6,19 +6,19 @@
 </template>
 
 <script>
-import VIcon from "vue-awesome";
-import "vue-awesome/icons/regular/copy";
-import "vue-awesome/icons/ban";
+import VIcon from 'vue-awesome'
+import 'vue-awesome/icons/regular/copy'
+import 'vue-awesome/icons/ban'
 
 export default {
-  name: "v-copy-button",
+  name: 'v-copy-button',
   props: {
-    value: String
+    value: String,
   },
   components: {
-    VIcon
-  }
-};
+    VIcon,
+  },
+}
 </script>
 
 <style scoped>

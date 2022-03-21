@@ -11,32 +11,32 @@
 </template>
 
 <script>
-import VDesc from "./Desc";
-import VLayer from "./Layer";
-import VPieceTable from "./PieceTable";
+import VDesc from './Desc'
+import VLayer from './Layer'
+import VPieceTable from './PieceTable'
 
 export default {
-  name: "v-layer-item",
+  name: 'v-layer-item',
   components: {
     VDesc,
     VLayer,
-    VPieceTable
+    VPieceTable,
   },
   props: {
     code: String,
     label: String,
     styles: Array,
-    expanded: Boolean
+    expanded: Boolean,
   },
   data() {
     return {
       layerProps: [
-        { prop: "background", label: "背景" },
-        { prop: "border", label: "边框" }
-      ]
-    };
-  }
-};
+        { prop: 'background', label: '背景' },
+        { prop: 'border', label: '边框' },
+      ],
+    }
+  },
+}
 </script>
 
 <style scoped>

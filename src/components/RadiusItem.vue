@@ -11,29 +11,29 @@
 </template>
 
 <script>
-import VDesc from "./Desc";
-import VCopyButton from "./CopyButton";
-import { evaluate } from "../utils";
+import VDesc from './Desc'
+import VCopyButton from './CopyButton'
+import { evaluate } from '../utils'
 
 export default {
-  name: "v-radius-item",
+  name: 'v-radius-item',
   components: {
     VDesc,
-    VCopyButton
+    VCopyButton,
   },
   props: {
     code: String,
     label: String,
-    radius: String
+    radius: String,
   },
   computed: {
     styles() {
       return {
-        borderRadius: evaluate(this.radius)
-      };
-    }
-  }
-};
+        borderRadius: evaluate(this.radius),
+      }
+    },
+  },
+}
 </script>
 
 <style scoped>

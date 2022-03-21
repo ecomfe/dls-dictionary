@@ -11,26 +11,26 @@
 </template>
 
 <script>
-import VCopyButton from "./CopyButton";
-import { evaluate, multiplyLength } from "../utils";
+import VCopyButton from './CopyButton'
+import { evaluate, multiplyLength } from '../utils'
 
 export default {
-  name: "v-exp-item",
+  name: 'v-exp-item',
   components: {
-    VCopyButton
+    VCopyButton,
   },
   props: {
-    exp: Object
+    exp: Object,
   },
   computed: {
     label() {
-      return `${this.exp.unit} * ${this.exp.count}`;
+      return `${this.exp.unit} * ${this.exp.count}`
     },
     length() {
-      return multiplyLength(evaluate(this.exp.unit), this.exp.count);
-    }
-  }
-};
+      return multiplyLength(evaluate(this.exp.unit), this.exp.count)
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -54,7 +54,7 @@ export default {
 
 .demo::before,
 .demo::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   width: 2px;

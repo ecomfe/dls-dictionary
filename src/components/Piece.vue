@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import { evaluate } from "../utils";
+import { evaluate } from '../utils'
 
 export default {
-  name: "v-piece",
+  name: 'v-piece',
   inheritAttrs: false,
   props: {
     background: String,
@@ -16,10 +16,10 @@ export default {
     shadow: String,
     text: {
       type: String,
-      default: '文'
+      default: '文',
     },
     fontSize: String,
-    fontWeight: String
+    fontWeight: String,
   },
   computed: {
     style() {
@@ -30,11 +30,11 @@ export default {
         color: this.color,
         boxShadow: this.shadow,
         fontSize: this.fontSize,
-        fontWeight: this.fontWeight
-      });
-    }
-  }
-};
+        fontWeight: this.fontWeight,
+      })
+    },
+  },
+}
 </script>
 
 <style scoped>

@@ -9,29 +9,29 @@
 </template>
 
 <script>
-import VDesc from "./Desc";
-import VCopyButton from "./CopyButton";
-import { evaluate } from "../utils";
+import VDesc from './Desc'
+import VCopyButton from './CopyButton'
+import { evaluate } from '../utils'
 
 export default {
-  name: "v-shadow-item",
+  name: 'v-shadow-item',
   components: {
     VDesc,
-    VCopyButton
+    VCopyButton,
   },
   props: {
     code: String,
     label: String,
-    shadow: String
+    shadow: String,
   },
   computed: {
     styles() {
       return {
-        boxShadow: evaluate(this.shadow)
-      };
-    }
-  }
-};
+        boxShadow: evaluate(this.shadow),
+      }
+    },
+  },
+}
 </script>
 
 <style scoped>

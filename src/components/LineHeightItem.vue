@@ -2,36 +2,38 @@
   <div class="line-height-item">
     <v-desc :code="code" :label="label" />
     <div class="value">
-      <div class="demo" :style="styles">众里寻他千百度，蓦然回首，那人却在，灯火阑珊处。</div>
+      <div class="demo" :style="styles">
+        众里寻他千百度，蓦然回首，那人却在，灯火阑珊处。
+      </div>
       <v-copy-button :value="lineHeight" />
     </div>
   </div>
 </template>
 
 <script>
-import VDesc from "./Desc";
-import VCopyButton from "./CopyButton";
-import { evaluate } from "../utils";
+import VDesc from './Desc'
+import VCopyButton from './CopyButton'
+import { evaluate } from '../utils'
 
 export default {
-  name: "v-radius-item",
+  name: 'v-radius-item',
   components: {
     VDesc,
-    VCopyButton
+    VCopyButton,
   },
   props: {
     code: String,
     label: String,
-    lineHeight: String
+    lineHeight: String,
   },
   computed: {
     styles() {
       return {
-        lineHeight: evaluate(this.lineHeight)
-      };
-    }
-  }
-};
+        lineHeight: evaluate(this.lineHeight),
+      }
+    },
+  },
+}
 </script>
 
 <style scoped>

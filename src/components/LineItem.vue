@@ -11,29 +11,29 @@
 </template>
 
 <script>
-import VDesc from "./Desc";
-import VCopyButton from "./CopyButton";
-import { evaluate } from "../utils";
+import VDesc from './Desc'
+import VCopyButton from './CopyButton'
+import { evaluate } from '../utils'
 
 export default {
-  name: "v-line-item",
+  name: 'v-line-item',
   components: {
     VDesc,
-    VCopyButton
+    VCopyButton,
   },
   props: {
     code: String,
     label: String,
-    color: String
+    color: String,
   },
   computed: {
     styles() {
       return {
-        backgroundColor: evaluate(this.color)
-      };
-    }
-  }
-};
+        backgroundColor: evaluate(this.color),
+      }
+    },
+  },
+}
 </script>
 
 <style scoped>

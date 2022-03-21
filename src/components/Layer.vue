@@ -1,62 +1,66 @@
 <template>
-  <x-layer :id="id" :class="{ focus: this.focus, disabled: this.disabled }" v-html="content" />
+  <x-layer
+    :id="id"
+    :class="{ focus: this.focus, disabled: this.disabled }"
+    v-html="content"
+  />
 </template>
 
 <script>
-import { evaluate } from "../utils";
+import { evaluate } from '../utils'
 
-let count = 0;
+let count = 0
 
 export default {
-  name: "v-layer",
+  name: 'v-layer',
   props: {
     styles: Array,
     disabled: Boolean,
     focus: Boolean,
     text: {
       type: String,
-      default: "文"
-    }
+      default: '文',
+    },
   },
   data() {
     return {
       hover: false,
       active: false,
-      id: `layer${++count}`
-    };
+      id: `layer${++count}`,
+    }
   },
   computed: {
     content() {
-      let [normal, hover, active, disabled] = this.styles;
-      hover = hover || normal;
-      active = active || hover;
-      disabled = disabled || normal;
-      let evaled = evaluate([normal, hover, active, disabled]);
+      let [normal, hover, active, disabled] = this.styles
+      hover = hover || normal
+      active = active || hover
+      disabled = disabled || normal
+      let evaled = evaluate([normal, hover, active, disabled])
 
       return [
-        "<style>",
-        ...["", ":hover", ":active", ".disabled"].map((selector, i) => {
-          let style = evaled[i];
+        '<style>',
+        ...['', ':hover', ':active', '.disabled'].map((selector, i) => {
+          let style = evaled[i]
           let merged = Object.keys(style).reduce((acc, prop) => {
-            acc[prop] = style[prop] ?? evaled[0][prop];
-            return acc;
-          }, {});
+            acc[prop] = style[prop] ?? evaled[0][prop]
+            return acc
+          }, {})
           return [
             `#${this.id + selector} {`,
-            merged.background ? `background-color: ${merged.background};` : "",
+            merged.background ? `background-color: ${merged.background};` : '',
             `border: 1px solid ${merged.border ?? 'transparent'};`,
-            merged.borderWidth ? `border-width: ${merged.borderWidth};` : "",
-            merged.color ? `color: ${merged.color};` : "",
-            merged.shadow ? `box-shadow: ${merged.shadow};` : "",
-            "}"
-          ].join("");
+            merged.borderWidth ? `border-width: ${merged.borderWidth};` : '',
+            merged.color ? `color: ${merged.color};` : '',
+            merged.shadow ? `box-shadow: ${merged.shadow};` : '',
+            '}',
+          ].join('')
         }),
-        "</style>",
-        normal.color ? this.text : ""
-      ].join("");
-    }
-  }
-};
+        '</style>',
+        normal.color ? this.text : '',
+      ].join('')
+    },
+  },
+}
 </script>
 
 <style scoped>
