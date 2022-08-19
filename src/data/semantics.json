@@ -1309,6 +1309,13 @@
       }
     },
     {
+      "code": "T6",
+      "label": "字号 6",
+      "styles": {
+        "fontSize": "@dls-font-size-6"
+      }
+    },
+    {
       "code": "W1",
       "label": "字重 1",
       "styles": {
