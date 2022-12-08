@@ -20,6 +20,7 @@ export default {
     },
     fontSize: String,
     fontWeight: String,
+    context: String,
   },
   computed: {
     style() {
@@ -31,6 +32,7 @@ export default {
         boxShadow: this.shadow,
         fontSize: this.fontSize,
         fontWeight: this.fontWeight,
+        '--context': this.context,
       })
     },
   },

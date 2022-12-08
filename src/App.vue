@@ -301,6 +301,7 @@ function transformStyles(styles) {
       [foregroundProp]: styles.color ? styles.color[i] : null,
       borderWidth: styles.line ? '4px' : null,
       focusRing: styles.focusRing,
+      context: styles.context,
     }
     return item
   })
@@ -570,7 +571,11 @@ x-layer::after {
   transform: translate(-50%, -50%);
   width: calc(100% + 24px);
   height: calc(100% + 24px);
+  padding: 1px;
+  background-clip: content-box;
   border: 2px dotted #d3d9e6;
   border-radius: 50%;
+  background-color: var(--context);
+  z-index: -1;
 }
 </style>

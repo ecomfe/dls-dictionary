@@ -1,7 +1,8 @@
 <template>
   <x-layer
     :id="id"
-    :class="{ focus: this.focus, disabled: this.disabled }"
+    :class="{ focus, disabled }"
+    :style="{ '--context': context }"
     v-html="content"
   />
 </template>
@@ -58,6 +59,9 @@ export default {
         '</style>',
         normal.color ? this.text : '',
       ].join('')
+    },
+    context() {
+      return evaluate(this.styles[0].context) || ''
     },
   },
 }

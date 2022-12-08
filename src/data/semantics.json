@@ -572,6 +572,33 @@
       ]
     },
     {
+      "code": "TR",
+      "label": "反转半透明图层",
+      "styles": {
+        "background": [
+          "@dls-background-color-translucent-reverse",
+          "@dls-background-color-translucent-reverse-hover",
+          "@dls-background-color-translucent-reverse-active",
+          "@dls-background-color-translucent-reverse-disabled"
+        ],
+        "border": [
+          "@dls-border-color-translucent-reverse",
+          null,
+          null,
+          "@dls-border-color-translucent-disabled-reverse"
+        ],
+        "focusRing": true,
+        "context": "@dls-background-color-neutral-primary"
+      },
+      "children": [
+        {
+          "code": "TR",
+          "label": "反转半透明图层",
+          "styles": {}
+        }
+      ]
+    },
+    {
       "code": "M",
       "label": "模态图层",
       "styles": {
@@ -594,7 +621,7 @@
       "label": "反转主要前景",
       "styles": {
         "color": ["@dls-foreground-color-primary-reverse", null, null, null],
-        "background": ["@dls-background-color-primary", null, null, null]
+        "context": "@dls-background-color-primary"
       }
     },
     {
@@ -602,12 +629,7 @@
       "label": "反转前景",
       "styles": {
         "color": ["@dls-foreground-color-reverse", null, null, null],
-        "background": [
-          "@dls-background-color-neutral-primary",
-          null,
-          null,
-          null
-        ]
+        "context": "@dls-background-color-neutral-primary"
       }
     },
     {

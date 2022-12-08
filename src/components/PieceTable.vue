@@ -81,6 +81,9 @@ export default {
                     : '@dls-shadow-focus',
               }
             : {}),
+          ...(this.styles[0].context
+            ? { context: this.styles[0].context }
+            : {}),
         }
       })
     },
